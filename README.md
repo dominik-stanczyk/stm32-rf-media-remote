@@ -2,15 +2,14 @@
 
 Custom wireless handheld controller designed for remote media management and real-time track telemetry. Built from scratch around the **STM32** ecosystem, featuring a custom binary communication protocol, power-saving sleep states, and an OLED user interface.
 
-> **Companion Host Application:** The PC-side bridge (Flask + Socket.IO + PySerial) responsible for browser integration, image dithering, and UART framing is maintained in a separate repository: **[Media-Hub-Server](https://github.com)**.
+> **Companion Host Application:** The PC-side bridge (Flask + Socket.IO + PySerial) responsible for browser integration, image dithering, and UART framing is maintained in: **[/bridge]**.
 
 ---
 
 ## System Architecture
 
 ```text
-+-------------------+       UART (115200 bps)       +-------------------+       RF Link (ELRS / SPI)       +-----------------------+
-
++-------------------+       UART (115200 bps)       +-------------------+       RF Link (2.4GHz / SPI)       +-----------------------+
 |   PC Host Bridge  | <===========================> |   USB Dongle RX   | <==============================> |  Handheld Controller  |
 | (Python/PySerial) |   Binary Frames (0xAA/0x55)   | (STM32 Blackpill) |       Custom Packet Protocol     |   (STM32F446 / RTOS)  |
 +-------------------+                               +-------------------+                                  +-----------------------+
