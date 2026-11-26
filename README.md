@@ -8,17 +8,16 @@ Custom wireless handheld controller designed for remote media management and rea
 
 ## System Architecture
 
-```text
-+-------------------+       UART (115200 bps)       +-------------------+       RF Link (2.4GHz / SPI)       +-----------------------+
-|   PC Host Bridge  | <===========================> |   USB Dongle RX   | <==============================> |  Handheld Controller  |
-| (Python/PySerial) |   Binary Frames (0xAA/0x55)   | (STM32 Blackpill) |       Custom Packet Protocol     |   (STM32F446 / RTOS)  |
-+-------------------+                               +-------------------+                                  +-----------------------+
+```mermaid
+flowchart LR
+    PC["<b>PC: Python + Pillow</b><br/><i>(kompresja JPG 64x64,<br/>podział na ramki, CRC16)</i>"]
+    BP["<b>STM32 BlackPill</b><br/><i>(mostek USB ↔ RF,<br/>buforowanie pakietów)</i>"]
+    F4["<b>STM32 F446RE + LVGL + Matrix 3x3</b><br/><i>(dekodowanie JPG, UI, przyciski,<br/>tryb STOP2 / Sleep)</i>"]
 
-                                                                                                                  |       |
-                                                                                                             SPI  |       | GPIO / EXTI
-                                                                                                                  v       v
-                                                                                                            [OLED 2.8"] [3x3 Matrix]
+    PC -- "USB CDC / COM3" --> BP
+    BP <== "RF / SPI" ==> F4
 ```
+
 
 ## Binary Frame Specification
 
