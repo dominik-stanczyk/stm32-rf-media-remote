@@ -10,14 +10,15 @@ Custom wireless handheld controller designed for remote media management and rea
 
 ```mermaid
 flowchart LR
-    PC["<b>PC: Python + Pillow</b><br/><i>(kompresja JPG 64x64,<br/>podział na ramki, CRC16)</i>"]
-    BP["<b>STM32 BlackPill</b><br/><i>(mostek USB ↔ RF,<br/>buforowanie pakietów)</i>"]
-    F4["<b>STM32 F446RE + LVGL + Matrix 3x3</b><br/><i>(dekodowanie JPG, UI, przyciski,<br/>tryb STOP2 / Sleep)</i>"]
+    PC["<b>PC: Python + Pillow</b><br/>(kompresja JPG 64x64,<br/>podział na ramki, CRC16)"]
+    USB(["USB CDC / COM3"])
+    BP["<b>STM32 BlackPill</b><br/>(mostek USB ↔ RF,<br/>buforowanie pakietów)"]
+    RF(["RF / SPI"])
+    F4["<b>STM32 F446RE + LVGL + Matrix 3x3</b><br/>(dekodowanie JPG, UI, przyciski,<br/>tryb STOP2 / Sleep)"]
 
-    PC -- "USB CDC / COM3" --> BP
-    BP <== "RF / SPI" ==> F4
+    PC --- USB --> BP
+    BP <==> RF <==> F4
 ```
-
 
 ## Binary Frame Specification
 
