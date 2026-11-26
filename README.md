@@ -10,11 +10,11 @@ Custom wireless handheld controller designed for remote media management and rea
 
 ```mermaid
 flowchart LR
-    PC["<b>PC: Python + Pillow</b><br/>(kompresja JPG 64x64,<br/>podział na ramki, CRC16)"]
+    PC["<b>PC: Python + Pillow</b><br/>(64x64 JPG compression,<br/>frame splitting, CRC16)"]
     USB(["USB CDC / COM3"])
-    BP["<b>STM32 BlackPill</b><br/>(mostek USB ↔ RF,<br/>buforowanie pakietów)"]
+    BP["<b>STM32 BlackPill</b><br/>(USB ↔ RF bridge,<br/>packet buffering)"]
     RF(["RF / SPI"])
-    F4["<b>STM32 F446RE + LVGL + Matrix 3x3</b><br/>(dekodowanie JPG, UI, przyciski,<br/>tryb STOP2 / Sleep)"]
+    F4["<b>STM32 F446RE + LVGL + Matrix 3x3</b><br/>(JPG decoding, UI, buttons,<br/>STOP2 / Sleep mode)"]
 
     PC --- USB --> BP
     BP <==> RF <==> F4
